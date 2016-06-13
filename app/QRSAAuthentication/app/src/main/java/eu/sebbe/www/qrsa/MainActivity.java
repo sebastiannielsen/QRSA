@@ -86,7 +86,7 @@ public class MainActivity extends Activity {
                 PublicKey = GenKey();
 
                 if (PublicKey.equals("")) {
-                    ShowDialog("Couldn't enroll your device. The causes can be:\n\n- Your device does not support Hardware-backed key storage.\n- Your device's key storage is not initialized.\n- Your device's key storage requires a secure lock screen.\n- Your device's key storage does not support 2048 bit RSA/ECB/OAEP.\n- Your phone is/was rooted and the hardware key storage has disabled itself.\n\nTip: Sometimes its possible to initialize the key storage by setting a PIN lock screen, then run this enroll process again, and then remove PIN lock screen. After this, the key will remain in secure storage.");
+                    ShowDialog("Couldn't enroll your device. The causes can be:\n\n- Your device does not support Hardware-backed key storage.\n- Your device's key storage is not initialized.\n- Your device's key storage requires a secure lock screen.\n- Your device's key storage does not support 2048 bit RSA/ECB/PKCS1.5.\n- Your phone is/was rooted and the hardware key storage has disabled itself.\n\nTip: Sometimes its possible to initialize the key storage by setting a PIN lock screen, then run this enroll process again, and then remove PIN lock screen. After this, the key will remain in secure storage.");
                 }
                 else {
                     ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
