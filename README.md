@@ -31,6 +31,7 @@ Prerequistes for running the app:
 
 
 How the "Message" function works in the web service:
+
 The web service must return the encrypted equvalient of PADDING::OTP::MESSAGE::PADDING.
 The idea behind pre/post padding is to place the sensitive info on a random place inside the ciphertext, making chosen-chiphertext attacks
 and known-plaintext-attacks harder.
