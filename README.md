@@ -3,6 +3,13 @@ RSA OTP Android Authentication App based on QR codes
 
 
 This is an app to authenticate users via their cell phone.
+Note that this is not designed to be a 2FA application, even if it can be used as such.
+
+The intended flow is, that the user enters their username, press "next" button. Then the user's public key is fetched, and a QR code is generated using the user's public key, containing the correct one-time password to be used to authenticate, that is shown along with a field to enter said OTP.
+The security goals of the system makes the system sufficently secure for being used as a single physical factor.
+
+Note that there is no device attestation support, so a user could easily generate a keypair insecurely, outside of secure hardware, and submit it for enrolling.
+If a system administrator wants to ensure that the key is stored securely, its recommended that the system administrator enrolls the phone for the user. Once enrolled, it will be impossible, yes completely IMPOSSIBLE, to extract the private key out of app.
 
 The technical goals for the app is:
 
@@ -29,6 +36,10 @@ Prerequistes for running the app:
 4. The secure chip inside phone, must support operations based on 2048 bit RSA/ECB/PKCS1.5
 5. In some cases, a rooted phone may permanently disable the security chip for security reasons.
 
+
+Why enrollment and other urls does not require any form of confirmation:
+
+Enrollment can seem to be a sensitive action, but it is really not. When a key is enrolled, the app first checks if there is already a key enrolled. In that case, that public key, is returned. Otherwise a new key is enrolled. User confirmation is instead done by having the app place the enrolled key in clipbord. This then requires a active user action to paste the key. So visiting or being redirected to a qrsa:// url is not a security issue, since all the possible actions, require some action from the user after the user have clicked OK on the dialog. The action can be using the PASTE command or typing a OTP into a web field.
 
 How the "Message" function works in the web service:
 
