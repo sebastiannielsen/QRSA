@@ -19,7 +19,7 @@ The security threat model, or security goal is:
 
 A comparision to threat model can be a car key. A car key does not require authentication to use, but the car key must be impossible to duplicate.
 This because a car rental company or private person may rent out or lend out a car.
-After the car has been returned, it should not be possible for the adversiary to access the car no longer.
+After the car has been returned, it should not be possible for the adversiary to access the car any longer.
 
 Prerequistes for running the app:
 
