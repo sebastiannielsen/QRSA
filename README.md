@@ -5,10 +5,12 @@ RSA OTP Android Authentication App based on QR codes
 This is an app to authenticate users via their cell phone.
 
 The technical goals for the app is:
+
 1. The app shouldn't require any communications with the outside world.
 2. There should be a link between the authentication request and the app, which in this case is done using QR codes.
 
 The security threat model, or security goal is:
+
 1. If someone does not have access to the phone, person should not be able to authenticate to the service in question.
 2. If someone does have acces to the phone, person should be considered authorized.
 3. It does not matter if the phone is stolen or whatever, its the authorized person's responsibility to protect his phone.
@@ -20,6 +22,7 @@ This because a car rental company or private person may rent out or lend out a c
 After the car has been returned, it should not be possible for the adversiary to access the car no longer.
 
 Prerequistes for running the app:
+
 1. The phone must support hardware based storage. This is a storage that uses a "Security Chip" inside the phone, making it impossible to copy the key off the phone.
 2. The store must be initalized. Sometimes its possible to initalize the store by setting up a PIN lock screen, and then just generating a key. Removing the lock screen will usally keep the key, unless the key properties was setup to require lock screen.
 3. In some cases, a secure lock screen MUST be used. This is dependent on phone model.
