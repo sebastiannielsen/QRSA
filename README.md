@@ -1,6 +1,7 @@
 # QRSA
 RSA OTP Android Authentication App based on QR codes
 
+[![Get it on Google Play](https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png)](https://play.google.com/store/apps/details?id=eu.sebbe.www.qrsa)
 
 This is an app to authenticate users via their cell phone.
 Note that this is not designed to be a 2FA application, even if it can be used as such.
