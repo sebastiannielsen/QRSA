@@ -34,6 +34,7 @@ public class MainActivity extends Activity {
         String toclipboard;
         String todialog;
         String action;
+        Boolean secure;
         boolean actionfound;
         Intent intent = getIntent();
         Uri data = intent.getData();
@@ -84,7 +85,7 @@ public class MainActivity extends Activity {
             if (action.equals("e")) {
             actionfound = true;
                 PublicKey = GenKey();
-
+                PublicKey = PublicKey.replaceAll("[^abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-]","");
                 if (PublicKey.equals("")) {
                     ShowDialog("Couldn't enroll your device. The causes can be:\n\n- Your device does not support Hardware-backed key storage.\n- Your device's key storage is not initialized.\n- Your device's key storage requires a secure lock screen.\n- Your device's key storage does not support 2048 bit RSA/ECB/PKCS1.5.\n- Your phone is/was rooted and the hardware key storage has disabled itself.\n\nTip: Sometimes its possible to initialize the key storage by setting a PIN lock screen, then run this enroll process again, and then remove PIN lock screen. After this, the key will remain in secure storage.");
                 }
@@ -96,30 +97,72 @@ public class MainActivity extends Activity {
                 }
 
             }
+            if (action.equals("u")) {
+                actionfound = true;
+                if (b64encoded.length() < 4) {
+                    ShowDialog("Malformed data was received from remote host. Please contact the site owner. Data needs to be: URL");
+                }
+                else {
+                    secure = false;
+                    PublicKey = GenKey();
+                    PublicKey = PublicKey.replaceAll("[^abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-]","");
+                    if (b64encoded.substring(0, 1).equals("s")) {
+                        secure = true;
+                    }
+                    b64encoded = b64encoded.substring(1);
+                    if (PublicKey.equals("")) {
+                        try {
+                            if (secure) {
+                                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://" + new String(Base64.decode(b64encoded, Base64.URL_SAFE), "UTF-8") + "INCOMPATIBLE_DEVICE")));
+                            }
+                            else
+                            {
+                                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://" + new String(Base64.decode(b64encoded, Base64.URL_SAFE), "UTF-8") + "INCOMPATIBLE_DEVICE")));
+                            }
+
+                        } catch (Exception e) {
+                            ShowDialog("Malformed data was received from remote host. Please contact the site owner. Data needs to be: URL");
+                        }
+                        Process.killProcess(Process.myPid());
+                    } else {
+                        try {
+                            if (secure) {
+                                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://" + new String(Base64.decode(b64encoded, Base64.URL_SAFE), "UTF-8") + PublicKey)));
+                            }
+                            else
+                            {
+                                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://" + new String(Base64.decode(b64encoded, Base64.URL_SAFE), "UTF-8") + PublicKey)));
+                            }
+                        } catch (Exception e) {
+                            ShowDialog("Malformed data was received from remote host. Please contact the site owner. Data needs to be: URL");
+                        }
+                        Process.killProcess(Process.myPid());
+                    }
+                }
+            }
             if (!actionfound) {
                 ShowDialog("Unknown action " + action);
             }
         } else {
             ShowDialog("No data was supplied");
         }
-
     }
 
   @Override
   public void onUserLeaveHint() {
-      Process.killProcess(Process.myPid());
+Process.killProcess(Process.myPid());
       super.onUserLeaveHint();
   }
 
   @Override
   public void onPause() {
-      Process.killProcess(Process.myPid());
+  Process.killProcess(Process.myPid());
       super.onPause();
   }
 
     @Override
     public void onDestroy() {
-        Process.killProcess(Process.myPid());
+    Process.killProcess(Process.myPid());
         super.onDestroy();
     }
 
@@ -194,12 +237,9 @@ public class MainActivity extends Activity {
         String formattedText;
         formattedText = message + "\n\n";
         TextView t;
-        t=new TextView(this);
         t=(TextView)findViewById(R.id.textView);
         t.setText(formattedText);
     }
 
-    public void KillApp(View someview) {
-        Process.killProcess(Process.myPid());
-    }
+    public void KillApp(View someview) {Process.killProcess(Process.myPid());}
 }
