@@ -40,7 +40,7 @@ Prerequistes for running the app:
 
 Why enrollment and other urls does not require any form of confirmation:
 
-Enrollment can seem to be a sensitive action, but it is really not. When a key is enrolled, the app first checks if there is already a key enrolled. In that case, that public key, is returned. Otherwise a new key is enrolled. User confirmation is instead done by having the app place the enrolled key in clipbord. This then requires a active user action to paste the key. So visiting or being redirected to a qrsa:// url is not a security issue, since all the possible actions, require some action from the user after the user have clicked OK on the dialog. The action can be using the PASTE command or typing a OTP into a web field.
+Enrollment can seem to be a sensitive action, but it is really not. When a key is enrolled, the app first checks if there is already a key enrolled. In that case, that public key, is returned. Otherwise a new key is enrolled. As the public key is not sensitive, user action is instead clicking a link or scanning a QR code.
 
 How the "Message" function works in the web service:
 
@@ -50,6 +50,23 @@ and known-plaintext-attacks harder.
 The OTP is the code the user will use to authenticate. When user authenticated by scanning the QR code, this will be shown on-screen.
 If the user authenticate by clicking the link inside the mobile (if the user accesses the web service from mobile), the OTP will be put in clipboard.
 This means the user can authenticate directly by just pasting inside the OTP field in web application.
+
+There are 4 actions available:
+
+- s = Scanned action. This performs a DECRYPT action on the supplied data and shows the OTP on screen.
+- c = Clicked action. This performs a DECRYPT action on the supplied data and puts OTP in clipboard.
+- e = Enroll action. This generates a new keypair unless one already exists, and then exports Public key to clipboard.
+- u = URL Enroll action. This generates a new keypair unless one already exists, and then appends the public key after the URL and redirects user to this.
+
+How "u" is designed to be used:
+The idea behind u is to allow enroll via a QR scan. The url is constructed by either using qrsa://us for HTTPS, and qrsa://u<anything> för HTTP, like qrsa://uh. Immediately after this, you put the URL, without scheme, as URLSafe Base64 encoded data.
+This can then be shown as a QR code.
+
+Please note that its important to add authentication data to the URL in question, like a session ID or one-time password, so a adversiary cannot enroll their own public keys to the user's account.
+
+Note that the enroll script must check the key content for the error code "DEVICE_INCOMPATIBLE". If that is shown, this means the user's device doesn't support the app OR the user's key storage is not properly activated or initialized. A good thing with submitting this error code, is that the web service in question can pre-expire any enroll attempts that fail, for security reasons.
+
+Note that the "e" enroll action is still recommended for when the user enroll directly on the mobile via their browser, as triggering the callback URL from inside the browser can have unintended side effects.
 
 OTP can be any format, but its generally a good idea to keep it short and secure. A good idea is using base32,
 and then using a length somewhere 10 characters, which are a good balance between typing the OTP and security.
