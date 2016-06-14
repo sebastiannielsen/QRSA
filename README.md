@@ -59,7 +59,7 @@ There are 4 actions available:
 - u = URL Enroll action. This generates a new keypair unless one already exists, and then appends the public key after the URL and redirects user to this.
 
 How "u" is designed to be used:
-The idea behind u is to allow enroll via a QR scan. The url is constructed by either using qrsa://us for HTTPS, and qrsa://u<anything> för HTTP, like qrsa://uh. Immediately after this, you put the URL, without scheme, as URLSafe Base64 encoded data.
+The idea behind u is to allow enroll via a QR scan. The url is constructed by either using qrsa://us for HTTPS, and qrsa://u'anything' för HTTP, like qrsa://uh. Immediately after this, you put the URL, without scheme, as URLSafe Base64 encoded data.
 This can then be shown as a QR code.
 
 Please note that its important to add authentication data to the URL in question, like a session ID or one-time password, so a adversiary cannot enroll their own public keys to the user's account.
