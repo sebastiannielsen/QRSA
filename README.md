@@ -66,7 +66,7 @@ Please note that its important to add authentication data to the URL in question
 
 Note that the enroll script must check the key content for the error code "DEVICE_INCOMPATIBLE". If that is shown, this means the user's device doesn't support the app OR the user's key storage is not properly activated or initialized. A good thing with submitting this error code, is that the web service in question can pre-expire any enroll attempts that fail, for security reasons.
 
-Note that the "e" enroll action is still recommended for when the user enroll directly on the mobile via their browser, as triggering the callback URL from inside the browser can have unintended side effects.
+Note that the "e" enroll action is still recommended for when the user enroll directly on their mobile browser, as triggering the callback URL from inside the mobile browser can have unintended side effects.
 
 OTP can be any format, but its generally a good idea to keep it short and secure. A good idea is using base32,
 and then using a length somewhere 10 characters, which are a good balance between typing the OTP and security.
