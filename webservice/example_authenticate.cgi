@@ -37,7 +37,7 @@ $ctext = urlsafe_b64encode($ciphertext);
 
 $linkdata = "qrsa://c".$ctext;
 $qrdata = "qrsa://s".$ctext;
-$qrcode = Text::QRCode->new(level => 'M', version => 15, casesensitive => 1);
+$qrcode = Text::QRCode->new(level => 'M', casesensitive => 1);
 $arref = $qrcode->plot($qrdata);
 $qrtoprint = join "<\/tr><tr>", map { join '', map { $_ eq '*' ? "<th><\/th>" : "<td><\/td>" } @$_ } @$arref;
 
