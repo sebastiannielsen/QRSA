@@ -14,7 +14,7 @@ If a system administrator wants to ensure that the key is stored securely, its r
 
 The technical goals for the app is:
 
-1. The app shouldn't require any communications with the outside world.
+1. The app shouldn't require any communications with the outside world when authenticating. Enrolling is a another thing.
 2. There should be a link between the authentication request and the app, which in this case is done using QR codes.
 
 The security threat model, or security goal is:
