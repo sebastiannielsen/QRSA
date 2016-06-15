@@ -64,7 +64,7 @@ This can then be shown as a QR code.
 
 Please note that its important to add authentication data to the URL in question, like a session ID or one-time password, so a adversiary cannot enroll their own public keys to the user's account.
 
-Note that the enroll script must check the key content for the error code "DEVICE_INCOMPATIBLE". If that is shown, this means the user's device doesn't support the app OR the user's key storage is not properly activated or initialized. A good thing with submitting this error code, is that the web service in question can pre-expire any enroll attempts that fail, for security reasons.
+Note that the enroll script must check the key content for the error code "INCOMPATIBLE_DEVICE". If that is shown, this means the user's device doesn't support the app OR the user's key storage is not properly activated or initialized. A good thing with submitting this error code, is that the web service in question can pre-expire any enroll attempts that fail, for security reasons.
 
 Note that the "e" enroll action is still recommended for when the user enroll directly on their mobile browser, as triggering the callback URL from inside the mobile browser can have unintended side effects.
 
