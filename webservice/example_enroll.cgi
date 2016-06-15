@@ -10,7 +10,7 @@ $inkey = param('inkey');
 $inkey =~ s/[^abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789\-_]*//sgi;
 if ($inkey) {
 
-if ($inkey eq "DEVICE_INCOMPATIBLE") {
+if ($inkey eq "INCOMPATIBLE_DEVICE") {
 print "Content-Type: text/html\n\nCouldn't Enroll! Your device is incompatible.";
 }
 else
