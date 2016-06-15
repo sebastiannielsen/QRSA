@@ -25,7 +25,7 @@ print "Content-Type: text/html\n\nSuccessfully Enrolled!";
 else
 {
 
-$qrcode = Text::QRCode->new(level => 'M', version => 9, casesensitive => 1);
+$qrcode = Text::QRCode->new(level => 'M', casesensitive => 1);
 $arref = $qrcode->plot("qrsa://us".urlsafe_b64encode("www.example.org/enroll.cgi?inkey="));
 $qrtoprint = join "<\/tr><tr>", map { join '', map { $_ eq '*' ? "<th><\/th>" : "<td><\/td>" } @$_ } @$arref;
 
