@@ -123,6 +123,7 @@ public class MainActivity extends Activity {
                         } catch (Exception e) {
                             ShowDialog("Malformed data was received from remote host. Please contact the site owner. Data needs to be: URL");
                         }
+                        this.finishAffinity();
                         Process.killProcess(Process.myPid());
                     } else {
                         try {
@@ -136,6 +137,7 @@ public class MainActivity extends Activity {
                         } catch (Exception e) {
                             ShowDialog("Malformed data was received from remote host. Please contact the site owner. Data needs to be: URL");
                         }
+                        this.finishAffinity();
                         Process.killProcess(Process.myPid());
                     }
                 }
@@ -150,19 +152,22 @@ public class MainActivity extends Activity {
 
   @Override
   public void onUserLeaveHint() {
-Process.killProcess(Process.myPid());
+      this.finishAffinity();
+      Process.killProcess(Process.myPid());
       super.onUserLeaveHint();
   }
 
   @Override
   public void onPause() {
-  Process.killProcess(Process.myPid());
+      this.finishAffinity();
+      Process.killProcess(Process.myPid());
       super.onPause();
   }
 
     @Override
     public void onDestroy() {
-    Process.killProcess(Process.myPid());
+        this.finishAffinity();
+        Process.killProcess(Process.myPid());
         super.onDestroy();
     }
 
@@ -241,5 +246,8 @@ Process.killProcess(Process.myPid());
         t.setText(formattedText);
     }
 
-    public void KillApp(View someview) {Process.killProcess(Process.myPid());}
+    public void KillApp(View someview) {
+        this.finishAffinity();
+        Process.killProcess(Process.myPid());
+    }
 }
