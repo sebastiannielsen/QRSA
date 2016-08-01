@@ -10,7 +10,6 @@ import java.security.KeyFactory;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.MessageDigest;
-
 import javax.crypto.Cipher;
 import android.util.Base64;
 import android.content.Context;
@@ -54,8 +53,8 @@ public class MainActivity extends Activity {
                 }
                 else {
                     String[] str_array = Plaintext.split("::");
-                    if (str_array.length != 4) {
-                        ShowDialog("Malformed data was received from remote host. Please contact the site owner. Data needs to be: PADDING::OTP::MESSAGE::PADDING");
+                    if (str_array.length != 5) {
+                        ShowDialog("Malformed data was received from remote host. Please contact the site owner. Data needs to be: PADDING::OTP::MESSAGE::HASH::PADDING");
                     }
                     else {
                         toclipboard = str_array[1];
@@ -81,7 +80,7 @@ public class MainActivity extends Activity {
                 }
                 else {
                     String[] str_array = Plaintext.split("::");
-                    if (str_array.length != 4) {
+                    if (str_array.length != 5) {
                         ShowDialog("Malformed data was received from remote host. Please contact the site owner. Data needs to be: PADDING::OTP::MESSAGE::HASH::PADDING");
                     }
                     else {
