@@ -9,6 +9,8 @@ import java.security.KeyStore.PrivateKeyEntry;
 import java.security.KeyFactory;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
+import java.security.MessageDigest;
+
 import javax.crypto.Cipher;
 import android.util.Base64;
 import android.content.Context;
@@ -33,6 +35,7 @@ public class MainActivity extends Activity {
         String Plaintext;
         String toclipboard;
         String todialog;
+        String hashcode;
         String action;
         Boolean secure;
         boolean actionfound;
@@ -57,10 +60,16 @@ public class MainActivity extends Activity {
                     else {
                         toclipboard = str_array[1];
                         todialog = str_array[2];
-                        ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-                        ClipData clip = ClipData.newPlainText("One Time Password", toclipboard);
-                        clipboard.setPrimaryClip(clip);
-                        ShowDialog("Authentication completed. Please use the Paste command on the OTP field by long-pressing and then selecting the clipboard icon.\n\nText sent by remote host:\n" + todialog);
+                        hashcode = str_array[3];
+                        if (hashcode.equals(Md5(toclipboard + todialog + toclipboard))) {
+                            ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                            ClipData clip = ClipData.newPlainText("One Time Password", toclipboard);
+                            clipboard.setPrimaryClip(clip);
+                            ShowDialog("Authentication completed. Please use the Paste command on the OTP field by long-pressing and then selecting the clipboard icon.\n\nText sent by remote host:\n" + todialog);
+                        }
+                        else {
+                            ShowDialog("Malformed data was received from remote host. Please contact the site owner. Data needs to be: PADDING::OTP::MESSAGE::HASH::PADDING");
+                        }
                     }
                 }
             }
@@ -73,12 +82,18 @@ public class MainActivity extends Activity {
                 else {
                     String[] str_array = Plaintext.split("::");
                     if (str_array.length != 4) {
-                        ShowDialog("Malformed data was received from remote host. Please contact the site owner. Data needs to be: PADDING::OTP::MESSAGE::PADDING");
+                        ShowDialog("Malformed data was received from remote host. Please contact the site owner. Data needs to be: PADDING::OTP::MESSAGE::HASH::PADDING");
                     }
                     else {
                         toclipboard = str_array[1];
                         todialog = str_array[2];
-                        ShowDialog("Authentication completed.\n\nYour authentication code:\n" + toclipboard + "\n\nText sent by remote host:\n" + todialog);
+                        hashcode = str_array[3];
+                        if (hashcode.equals(Md5(toclipboard + todialog + toclipboard))) {
+                            ShowDialog("Authentication completed.\n\nYour authentication code:\n" + toclipboard + "\n\nText sent by remote host:\n" + todialog);
+                        }
+                        else {
+                            ShowDialog("Malformed data was received from remote host. Please contact the site owner. Data needs to be: PADDING::OTP::MESSAGE::HASH::PADDING");
+                        }
                     }
                 }
             }
@@ -234,6 +249,21 @@ public class MainActivity extends Activity {
         }
         else
         {
+            return "";
+        }
+    }
+
+    public String Md5(String validation) {
+        try {
+            MessageDigest hash = MessageDigest.getInstance("md5");
+            hash.update(validation.getBytes());
+            byte[] strarr = hash.digest();
+            StringBuilder finalhash = new StringBuilder();
+            for (int i = 0; i < strarr.length; i++) {
+                finalhash.append(String.format("%02X", strarr[i]));
+            }
+            return finalhash.toString().toLowerCase();
+        } catch (Exception e) {
             return "";
         }
     }
