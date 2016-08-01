@@ -3,6 +3,8 @@
 use Crypt::OpenSSL::RSA;
 use MIME::Base64::URLSafe;
 use Text::QRCode;
+use Digest::MD5;
+
 
 $key = "";
 open(KEYFILE, "pubkey.txt");
@@ -16,8 +18,9 @@ $rsa_pub->use_pkcs1_padding();
 @allchars = ("A".."Z", "a".."z", "0".."9");
 $otpcode = "";
 $otpcode = $otpcode . $b32chars[rand @b32chars] for 1..16;
-
-$fullmsg = "a::".$otpcode."::Sebbe testar...::z";
+$msg = "Sebbe testar...";
+$validation = md5_hex($otpcode . $msg . $otpcode);
+$fullmsg = "a::".$otpcode."::".$msg."::".$validation."::z";
 
 if (length($fullmsg) < 244) {
 $left = 244 - length($fullmsg);
