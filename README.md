@@ -44,12 +44,13 @@ Enrollment can seem to be a sensitive action, but it is really not. When a key i
 
 How the "Message" function works in the web service:
 
-The web service must return the encrypted equvalient of PADDING::OTP::MESSAGE::PADDING.
+The web service must return the encrypted equvalient of PADDING::OTP::MESSAGE::HASH::PADDING.
 The idea behind pre/post padding is to place the sensitive info on a random place inside the ciphertext, making chosen-chiphertext attacks
 and known-plaintext-attacks harder.
 The OTP is the code the user will use to authenticate. When user authenticated by scanning the QR code, this will be shown on-screen.
 If the user authenticate by clicking the link inside the mobile (if the user accesses the web service from mobile), the OTP will be put in clipboard.
 This means the user can authenticate directly by just pasting inside the OTP field in web application.
+The HASH is the md5 out of OTP + MESSAGE + OTP, where + denotes string concatenation. The sandwiched construction prevents a attacker from moving the separator between OTP and MESSAGE. This HASH is added to prevent some rough forms of malleability attacks.
 
 There are 4 actions available:
 
