@@ -3,8 +3,7 @@
 use Crypt::OpenSSL::RSA;
 use MIME::Base64::URLSafe;
 use Text::QRCode;
-use Digest::MD5;
-
+use Digest::MD5 qw(md5_hex);
 
 $key = "";
 open(KEYFILE, "pubkey.txt");
