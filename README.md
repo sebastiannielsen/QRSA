@@ -27,9 +27,9 @@ The security threat model, or security goal is:
 
 A comparision to threat model can be a car key. A car key does not require authentication to use, but the car key must be impossible to duplicate.
 This because a car rental company or private person may rent out or lend out a car.
-After the car has been returned, it should not be possible for the adversiary to access the car any longer.
+After the car has been returned, it should not be possible for the adversary to access the car any longer.
 
-Prerequistes for running the app:
+Prerequisites for running the app:
 
 1. The phone must support hardware based storage. This is a storage that uses a "Security Chip" inside the phone, making it impossible to copy the key off the phone.
 2. The store must be initalized. Sometimes its possible to initalize the store by setting up a PIN lock screen, and then just generating a key. Removing the lock screen will usally keep the key, unless the key properties was setup to require lock screen.
