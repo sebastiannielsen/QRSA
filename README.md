@@ -20,7 +20,7 @@ The technical goals for the app is:
 The security threat model, or security goal is:
 
 1. If someone does not have access to the phone, person should not be able to authenticate to the service in question.
-2. If someone does have acces to the phone, person should be considered authorized.
+2. If someone does have access to the phone, person should be considered authorized.
 3. It does not matter if the phone is stolen or whatever, its the authorized person's responsibility to protect his phone.
 4. If someone loses access to a phone, for example if a person turns in his job mobile after finished a employment, person should no longer have access.
 5. It must be impossible to copy or clone the sensitive authentication data (private key) from the app.
